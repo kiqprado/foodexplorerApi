@@ -19,7 +19,7 @@ class DishesController {
 
     await knex('ingredients').insert(ingredientsInsert)
 
-    response.json()
+    return response.json()
   }
 
   async show(request, response) {
