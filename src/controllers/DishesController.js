@@ -1,8 +1,7 @@
 const knex = require('../database/knex')
-
 class DishesController {
   async create(request, response) {
-    const { photo, title, description, ingredients, price } = request.body
+    const { title, description, ingredients, price } = request.body
 
     const [dish_id] = await knex('dishes').insert({
       title,
@@ -57,7 +56,7 @@ class DishesController {
       dishes = await knex('ingredients')
         .select([
           'dishes.id',
-          'dishes.photo',
+          'dishes.avatar',
           'dishes.title',
           'dishes.description',
           'dishes.price'

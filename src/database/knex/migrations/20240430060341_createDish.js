@@ -1,7 +1,7 @@
 exports.up = knex =>
   knex.schema.createTable('dishes', table => {
     table.increments('id')
-    table.text('photo').default(null)
+    table.text('avatar').default(null)
     table.text('title').notNullable()
     table.text('description')
     table.decimal('price', 8, 2)
