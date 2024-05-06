@@ -3,22 +3,23 @@ const DiskStorage = require('../providers/DiskStorage')
 
 class DishAvatarController {
   async update(request, response) {
+    const { dish_id } = request.params.params
     const avatarFilename = request.file.filename
 
     const diskStorage = new DiskStorage()
 
-    const dishes = await knex('dishes').first()
+    const dish = await knex('dishes').where({ id: dish_id }).first()
 
-    if (dishes.avatar) {
-      await diskStorage.deleteFile(dishes.avatar)
+    if (dish.avatar) {
+      await diskStorage.deleteFile(dish.avatar)
     }
 
     const filename = await diskStorage.saveFile(avatarFilename)
-    dishes.avatar = filename
+    dish.avatar = filename
 
-    await knex('dishes').update(dishes)
+    await knex('dishes').update(dish).where({ id: dish_id })
 
-    return response.json(dishes)
+    return response.json(dish)
   }
 }
 
