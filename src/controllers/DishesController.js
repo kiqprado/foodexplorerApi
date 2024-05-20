@@ -64,6 +64,7 @@ class DishesController {
         .whereIn('ingredients.name', filterIngredients)
         .whereLike('dishes.title', `%${title}%`)
         .innerJoin('dishes', 'dishes.id', 'ingredients.dish_id')
+        .groupBy('dishes.id')
     } else {
       dishes = await knex('dishes')
         .whereLike('title', `%${title}%`)
