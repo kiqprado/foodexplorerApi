@@ -2,7 +2,6 @@ const { Router } = require('express')
 
 const usersRouter = require('./users.routes.js')
 const dishesRouter = require('./dishes.routes.js')
-
 const sessionsRouter = require('./sessions.routes.js')
 
 const routes = Router()
