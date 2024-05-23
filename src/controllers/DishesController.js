@@ -3,6 +3,7 @@ const DiskStorage = require('../providers/DiskStorage')
 
 const diskStorage = new DiskStorage()
 class DishesController {
+  
   async uploadAvatar(request, response) {
     const { filename: avatar } = request.file
     const filename = await diskStorage.saveFile(avatar)
