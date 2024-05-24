@@ -3,7 +3,6 @@ const DiskStorage = require('../providers/DiskStorage')
 
 const diskStorage = new DiskStorage()
 class DishesController {
-  
   async uploadAvatar(request, response) {
     const { filename: avatar } = request.file
     const filename = await diskStorage.saveFile(avatar)
@@ -14,9 +13,17 @@ class DishesController {
     const { title, category_name, ingredients, price, description, avatar } =
       request.body
 
+    let category = await knex('category').where({ name: category_name }).first()
+
+    if (!category) {
+      const [categoryId] = await knex('category').insert({ name: category_name });
+      category = { id: categoryId, name: category_name };
+    }
+
     const [dish_id] = await knex('dishes').insert({
       avatar,
       title,
+      category_id: category.id,
       description,
       price
     })
