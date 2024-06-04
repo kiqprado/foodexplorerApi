@@ -16,8 +16,10 @@ class DishesController {
     let category = await knex('category').where({ name: category_name }).first()
 
     if (!category) {
-      const [categoryId] = await knex('category').insert({ name: category_name });
-      category = { id: categoryId, name: category_name };
+      const [categoryId] = await knex('category').insert({
+        name: category_name
+      })
+      category = { id: categoryId, name: category_name }
     }
 
     const [dish_id] = await knex('dishes').insert({
@@ -48,6 +50,10 @@ class DishesController {
       .where({ dish_id: id })
       .orderBy('name')
 
+    if (dish.avatar) {
+      dish.avatar_url = `${process.env.BASE_URL}/files/${dish.avatar}`
+    }
+
     return response.json({
       ...dish,
       ingredients
@@ -62,7 +68,7 @@ class DishesController {
     return response.json()
   }
 
- /* async index(request, response) {
+  /* async index(request, response) {
     const { title, ingredients } = request.query
 
     let dishes
@@ -136,6 +142,5 @@ class DishesController {
     return response.json(dishWithIngredients)
   }
 }
-
 
 module.exports = DishesController

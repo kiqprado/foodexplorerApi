@@ -4,7 +4,7 @@ class CategoryController {
   async create(request, response) {
     const { name } = request.body
 
-    await knex('category').isert({ name })
+    await knex('category').insert({ name })
 
     return response.json()
   }
